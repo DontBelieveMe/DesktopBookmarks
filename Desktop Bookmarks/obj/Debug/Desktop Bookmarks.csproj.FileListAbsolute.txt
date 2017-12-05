@@ -1,0 +1,10 @@
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\bin\Debug\Desktop Bookmarks.exe.config
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\bin\Debug\Desktop Bookmarks.exe
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\bin\Debug\Desktop Bookmarks.pdb
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\Desktop Bookmarks.csprojResolveAssemblyReference.cache
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\DesktopBookmarks.Properties.Resources.resources
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\Desktop Bookmarks.csproj.GenerateResource.Cache
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\Desktop Bookmarks.exe
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\Desktop Bookmarks.pdb
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\DesktopBookmarks.View.Client.resources
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\DesktopBookmarks.View.NewFolderDialog.resources
