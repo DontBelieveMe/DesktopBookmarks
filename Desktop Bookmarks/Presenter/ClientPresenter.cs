@@ -88,7 +88,10 @@ namespace DesktopBookmarks.Presenter
         {
             if (type.Id == id) return type;
 
-            foreach(IModelType t in ((Folder)type).Children)
+            if (type.GetType() == typeof(Bookmark))
+                return null;
+
+            foreach(IModelType t in ((Folder)type).Children.Where(a => a.GetType() == typeof(Folder)))
             {
                 IModelType t2 = GetModelTypeById(t, id);
                 if (t2 != null) return t2;
