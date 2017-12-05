@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using DesktopBookmarks.View;
 using DesktopBookmarks.Model;
+using DesktopBookmarks.Classes;
 
 namespace DesktopBookmarks.Presenter
 {
@@ -19,8 +20,18 @@ namespace DesktopBookmarks.Presenter
             _view = view;
             _view.AddNewFolder += AddNewFolder;
             _view.AddNewBookmark += AddNewBookmark;
+            _view.OpenBookmark += _view_OpenBookmark;
 
             _bookmarksTree = new BookmarksTree();
+        }
+
+        private void _view_OpenBookmark(object sender, OpenBookmarkEventArgs e)
+        {
+            IModelType typeToOpen = GetModelTypeById(e.IdToOpen);
+            if (typeToOpen.GetType() != typeof(Bookmark)) return;
+
+            URLOpener opener = new URLOpener(Browser.Chrome);
+            opener.Open(((Bookmark)typeToOpen).Url);
         }
 
         private void AddNewBookmark(object sender, AddBookmarkEventArgs e)
@@ -66,7 +77,7 @@ namespace DesktopBookmarks.Presenter
                     ((Folder)parentNode).Children.Add(folder);
                 } else
                 {
-                    throw new InvalidOperationException();
+                    return;
                 }
             }
 
@@ -91,7 +102,7 @@ namespace DesktopBookmarks.Presenter
             if (type.GetType() == typeof(Bookmark))
                 return null;
 
-            foreach(IModelType t in ((Folder)type).Children.Where(a => a.GetType() == typeof(Folder)))
+            foreach(IModelType t in ((Folder)type).Children)
             {
                 IModelType t2 = GetModelTypeById(t, id);
                 if (t2 != null) return t2;

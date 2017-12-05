@@ -39,6 +39,7 @@
             this.txtFolderName.Name = "txtFolderName";
             this.txtFolderName.Size = new System.Drawing.Size(221, 20);
             this.txtFolderName.TabIndex = 0;
+            this.txtFolderName.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtFolderName_PreviewKeyDown);
             // 
             // btnCreate
             // 
@@ -71,6 +72,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "NewFolderDialog";
             this.Text = "New Folder";
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.NewFolderDialog_PreviewKeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -11,6 +11,7 @@ namespace DesktopBookmarks.View
     {
         event EventHandler<AddFolderEventArgs> AddNewFolder;
         event EventHandler<AddBookmarkEventArgs> AddNewBookmark;
+        event EventHandler<OpenBookmarkEventArgs> OpenBookmark;
 
         string LabelText { get; set; }
         string UrlText { get; set; }

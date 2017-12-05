@@ -61,6 +61,7 @@
             this.txtURL.Name = "txtURL";
             this.txtURL.Size = new System.Drawing.Size(314, 20);
             this.txtURL.TabIndex = 2;
+            this.txtURL.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtURL_PreviewKeyDown);
             // 
             // txtLabel
             // 
@@ -68,6 +69,7 @@
             this.txtLabel.Name = "txtLabel";
             this.txtLabel.Size = new System.Drawing.Size(314, 20);
             this.txtLabel.TabIndex = 3;
+            this.txtLabel.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtLabel_PreviewKeyDown);
             // 
             // treeBookmarks
             // 
@@ -76,6 +78,7 @@
             this.treeBookmarks.Name = "treeBookmarks";
             this.treeBookmarks.Size = new System.Drawing.Size(374, 363);
             this.treeBookmarks.TabIndex = 4;
+            this.treeBookmarks.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeBookmarks_NodeMouseDoubleClick);
             this.treeBookmarks.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeBookmarks_MouseDown);
             // 
             // btnAdd

@@ -20,6 +20,7 @@ namespace DesktopBookmarks.View
 
         public event EventHandler<AddFolderEventArgs> AddNewFolder;
         public event EventHandler<AddBookmarkEventArgs> AddNewBookmark;
+        public event EventHandler<OpenBookmarkEventArgs> OpenBookmark;
 
         public Client()
         {
@@ -37,15 +38,20 @@ namespace DesktopBookmarks.View
             new ClientPresenter(this);
         }
 
-        // Add a bookmark
-        private void BtnAdd_Click(object sender, EventArgs e)
+        private void AddBookmark()
         {
             TreeNode parentNode = treeBookmarks.SelectedNode;
             string parentId = parentNode == null ? null : (string)parentNode.Tag;
 
             AddBookmarkEventArgs args = new AddBookmarkEventArgs(UrlText, LabelText, parentId);
-            
+
             AddNewBookmark?.Invoke(this, args);
+        }
+
+        // Add a bookmark
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            AddBookmark();
         }
 
         private void BtnAddFolder(object sender, EventArgs e)
@@ -70,7 +76,7 @@ namespace DesktopBookmarks.View
             node.Text = bookmark.Label;
             node.Tag = bookmark.Id;
             node.ImageIndex = 0;
-
+            node.SelectedImageIndex = 0;
             if(string.IsNullOrEmpty(parentId))
             {
                 treeBookmarks.Nodes.Add(node);
@@ -118,7 +124,7 @@ namespace DesktopBookmarks.View
             node.Text = bookmark.Label;
             node.Tag = bookmark.Id;
             node.ImageIndex = 1;
-
+            node.SelectedImageIndex = 1;
             if (string.IsNullOrEmpty(parentId))
             {
                 treeBookmarks.Nodes.Add(node);
@@ -138,6 +144,33 @@ namespace DesktopBookmarks.View
             if (hit.Node == null)
             {
                 treeBookmarks.SelectedNode = null;
+            }
+        }
+
+        private void treeBookmarks_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            TreeNode selected = treeBookmarks.SelectedNode;
+            if (selected == null) return;
+            string id = (string)selected.Tag;
+
+            OpenBookmark?.Invoke(this, new OpenBookmarkEventArgs(id));
+        }
+
+        private void txtLabel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                AddBookmark();
+                txtURL.Select();
+            }
+        }
+
+        private void txtURL_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            // Pasting!
+            if(e.Control && e.KeyCode == Keys.V)
+            {
+                txtLabel.Focus();
             }
         }
     }

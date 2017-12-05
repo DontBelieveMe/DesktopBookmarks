@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\URLOpener.cs" />
     <Compile Include="Model\Bookmark.cs" />
     <Compile Include="Model\BookmarksTree.cs" />
     <Compile Include="Model\Folder.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="View\NewFolderDialog.Designer.cs">
       <DependentUpon>NewFolderDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\OpenBookmarkEventArgs.cs" />
     <EmbeddedResource Include="View\Client.resx">
       <DependentUpon>Client.cs</DependentUpon>
     </EmbeddedResource>

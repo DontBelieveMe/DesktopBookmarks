@@ -30,5 +30,27 @@ namespace DesktopBookmarks.View
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
+        private void txtFolderName_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            } else if (e.KeyCode == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
+                Close();
+            }
+        }
+
+        private void NewFolderDialog_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if(e.KeyCode == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
+                Close();
+            }
+        }
     }
 }
