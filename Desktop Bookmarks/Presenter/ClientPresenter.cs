@@ -41,17 +41,22 @@ namespace DesktopBookmarks.Presenter
             
             if (!isParentAFolder) return;
 
-            bool isFolderEmpty = ((Folder)nodeToRemove).Children.Count() == 0;
 
-            if(isNodeToRemoveAFolder && !isFolderEmpty)
+            if(isNodeToRemoveAFolder)
             {
-                var diagResult = _dialogService.ShowMessageBox(
-                    "Remove folder?", "Deleting this folder will delete all children.", 
-                    System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Warning
-                );
+                bool isFolderEmpty = ((Folder)nodeToRemove).Children.Count() == 0;
+                if (!isFolderEmpty)
+                {
 
-                if (diagResult != System.Windows.Forms.DialogResult.OK) return;
+                    var diagResult = _dialogService.ShowMessageBox(
+                        "Remove folder?", "Deleting this folder will delete all children.",
+                        System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Warning
+                    );
+
+                    if (diagResult != System.Windows.Forms.DialogResult.OK) return;
+                }
             }
+
             if (parentNode == null)
             {
                 _bookmarksTree.Bookmarks.Remove(nodeToRemove);

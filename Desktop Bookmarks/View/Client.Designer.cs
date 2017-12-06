@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtURL = new System.Windows.Forms.TextBox();
@@ -36,6 +37,9 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnNewFolder = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
+            this.treeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnCtxtRemoveNode = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -109,6 +113,19 @@
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = true;
             // 
+            // treeContextMenu
+            // 
+            this.treeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnCtxtRemoveNode});
+            this.treeContextMenu.Name = "treeContextMenu";
+            this.treeContextMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // btnCtxtRemoveNode
+            // 
+            this.btnCtxtRemoveNode.Name = "btnCtxtRemoveNode";
+            this.btnCtxtRemoveNode.Size = new System.Drawing.Size(152, 22);
+            this.btnCtxtRemoveNode.Text = "Remove";
+            // 
             // Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -127,6 +144,7 @@
             this.MinimizeBox = false;
             this.Name = "Client";
             this.Text = "Bookmarks";
+            this.treeContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,6 +160,8 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnNewFolder;
         private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.ContextMenuStrip treeContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem btnCtxtRemoveNode;
     }
 }
 

@@ -30,7 +30,9 @@ namespace DesktopBookmarks.View
             btnNewFolder.Click += BtnAddFolder;
             btnAdd.Click += BtnAdd_Click;
             btnRemove.Click += BtnRemove_Click;
-
+            treeBookmarks.NodeMouseClick += TreeBookmarks_NodeMouseClick;
+            btnCtxtRemoveNode.Click += BtnRemove_Click;
+            txtURL.PreviewKeyDown += TxtURL_PreviewKeyDown;
             ImageList images = new ImageList();
             images.Images.Add(Properties.Resources.folder);
             images.Images.Add(Properties.Resources.internet);
@@ -40,6 +42,23 @@ namespace DesktopBookmarks.View
             new ClientPresenter(this, new UIDialogService());
         }
 
+        private void TxtURL_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                txtLabel.Focus();
+            }
+        }
+
+        private void TreeBookmarks_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                treeBookmarks.SelectedNode = e.Node;
+                treeContextMenu.Show(treeBookmarks.PointToScreen(e.Location));
+            }
+        }
+        
         private void BtnRemove_Click(object sender, EventArgs e)
         {
             TreeNode selected = treeBookmarks.SelectedNode;
