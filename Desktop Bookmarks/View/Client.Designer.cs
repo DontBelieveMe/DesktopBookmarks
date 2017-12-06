@@ -35,6 +35,7 @@
             this.treeBookmarks = new System.Windows.Forms.TreeView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnNewFolder = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -92,18 +93,28 @@
             // 
             // btnNewFolder
             // 
-            this.btnNewFolder.Location = new System.Drawing.Point(230, 60);
+            this.btnNewFolder.Location = new System.Drawing.Point(230, 61);
             this.btnNewFolder.Name = "btnNewFolder";
             this.btnNewFolder.Size = new System.Drawing.Size(75, 23);
             this.btnNewFolder.TabIndex = 6;
             this.btnNewFolder.Text = "New Folder";
             this.btnNewFolder.UseVisualStyleBackColor = true;
             // 
+            // btnRemove
+            // 
+            this.btnRemove.Location = new System.Drawing.Point(12, 61);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnRemove.TabIndex = 7;
+            this.btnRemove.Text = "Remove";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            // 
             // Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(398, 465);
+            this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnNewFolder);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.treeBookmarks);
@@ -130,6 +141,7 @@
         private System.Windows.Forms.TreeView treeBookmarks;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnNewFolder;
+        private System.Windows.Forms.Button btnRemove;
     }
 }
 

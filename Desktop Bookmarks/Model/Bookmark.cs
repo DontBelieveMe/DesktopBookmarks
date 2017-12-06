@@ -11,13 +11,14 @@ namespace DesktopBookmarks.Model
         public string Url { get; set; }
         public string Label { get; set; }
         public string Id { get; set; }
+        public string ParentId { get; set; }
 
-        
-        public Bookmark(string url, string label, string id)
+        public Bookmark(string url, string label, string id, string parentId)
         {
             this.Url = url;
             this.Label = label;
             this.Id = id;
+            this.ParentId = parentId;
         }
     }
 }

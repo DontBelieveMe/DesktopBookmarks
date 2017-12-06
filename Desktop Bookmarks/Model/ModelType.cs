@@ -10,5 +10,6 @@ namespace DesktopBookmarks.Model
     {
         string Label { get; set; }
         string Id { get; set; }
+        string ParentId { get; set; }
     }
 }

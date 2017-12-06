@@ -21,6 +21,7 @@ namespace DesktopBookmarks.View
         public event EventHandler<AddFolderEventArgs> AddNewFolder;
         public event EventHandler<AddBookmarkEventArgs> AddNewBookmark;
         public event EventHandler<OpenBookmarkEventArgs> OpenBookmark;
+        public event EventHandler<RemoveNodeEventArgs> RemoveNode;
 
         public Client()
         {
@@ -28,6 +29,7 @@ namespace DesktopBookmarks.View
 
             btnNewFolder.Click += BtnAddFolder;
             btnAdd.Click += BtnAdd_Click;
+            btnRemove.Click += BtnRemove_Click;
 
             ImageList images = new ImageList();
             images.Images.Add(Properties.Resources.folder);
@@ -35,7 +37,17 @@ namespace DesktopBookmarks.View
 
             treeBookmarks.ImageList = images;
 
-            new ClientPresenter(this);
+            new ClientPresenter(this, new UIDialogService());
+        }
+
+        private void BtnRemove_Click(object sender, EventArgs e)
+        {
+            TreeNode selected = treeBookmarks.SelectedNode;
+            string id;
+            if (selected == null) id = null;
+            else id = (string)selected.Tag;
+
+            RemoveNode?.Invoke(this, new RemoveNodeEventArgs(id));
         }
 
         private void AddBookmark()
@@ -172,6 +184,20 @@ namespace DesktopBookmarks.View
             {
                 txtLabel.Focus();
             }
+        }
+
+        public void RemoveNodeFromTree(string id)
+        {
+            TreeNode node = FindFromAll(id);
+            if (node.Parent == null)
+            {
+                treeBookmarks.Nodes.Remove(node);
+            }
+            else
+            {
+                node.Parent.Nodes.Remove(node);
+            }
+            treeBookmarks.Select();
         }
     }
 }
