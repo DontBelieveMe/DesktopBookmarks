@@ -25,8 +25,13 @@ namespace DesktopBookmarks.Presenter
             _view.AddNewBookmark += AddNewBookmark;
             _view.OpenBookmark += _view_OpenBookmark;
             _view.RemoveNode += _view_RemoveNode;
-
+            _view.Save += _view_Save;
             _bookmarksTree = new BookmarksTree();
+        }
+
+        private void _view_Save(object sender, EventArgs e)
+        {
+            _bookmarksTree.WriteToFile("Dave");
         }
 
         private void _view_RemoveNode(object sender, RemoveNodeEventArgs e)

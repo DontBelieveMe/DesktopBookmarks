@@ -13,6 +13,7 @@ namespace DesktopBookmarks.View
         event EventHandler<AddBookmarkEventArgs> AddNewBookmark;
         event EventHandler<OpenBookmarkEventArgs> OpenBookmark;
         event EventHandler<RemoveNodeEventArgs> RemoveNode;
+        event EventHandler Save;
 
         string LabelText { get; set; }
         string UrlText { get; set; }

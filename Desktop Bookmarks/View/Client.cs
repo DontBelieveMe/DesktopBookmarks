@@ -23,6 +23,7 @@ namespace DesktopBookmarks.View
         public event EventHandler<AddBookmarkEventArgs> AddNewBookmark;
         public event EventHandler<OpenBookmarkEventArgs> OpenBookmark;
         public event EventHandler<RemoveNodeEventArgs> RemoveNode;
+        public event EventHandler Save;
 
         public Client()
         {
@@ -34,8 +35,7 @@ namespace DesktopBookmarks.View
             btnCtxtRemoveNode.Click += BtnRemove_Click;
 
             txtURL.PreviewKeyDown += TxtURL_PreviewKeyDown;
-            txtURL.TextChanged += TxtURL_TextChanged;
-
+            
             ImageList images = new ImageList();
             images.Images.Add(Properties.Resources.folder);
             images.Images.Add(Properties.Resources.internet);
@@ -239,6 +239,11 @@ namespace DesktopBookmarks.View
         private void btnCtxAddFolder_Click(object sender, EventArgs e)
         {
             AddFolder();
-        }    
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            Save?.Invoke(this, new EventArgs());
+        }
     }
 }
