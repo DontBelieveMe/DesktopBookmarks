@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.6.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.6.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\UrlChecker.cs" />
     <Compile Include="Classes\URLOpener.cs" />
+    <Compile Include="Classes\WebPageTitleScraper.cs" />
     <Compile Include="Model\Bookmark.cs" />
     <Compile Include="Model\BookmarksTree.cs" />
     <Compile Include="Model\Folder.cs" />
@@ -88,6 +93,7 @@
     <EmbeddedResource Include="View\NewFolderDialog.resx">
       <DependentUpon>NewFolderDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using DesktopBookmarks.Presenter;
 using DesktopBookmarks.Model;
+using DesktopBookmarks.Classes;
 
 namespace DesktopBookmarks.View
 {
@@ -26,13 +27,14 @@ namespace DesktopBookmarks.View
         public Client()
         {
             InitializeComponent();
-
+            treeContextMenu.VisibleChanged += TreeContextMenu_VisibleChanged;
             btnNewFolder.Click += BtnAddFolder;
             btnAdd.Click += BtnAdd_Click;
             btnRemove.Click += BtnRemove_Click;
-            treeBookmarks.NodeMouseClick += TreeBookmarks_NodeMouseClick;
             btnCtxtRemoveNode.Click += BtnRemove_Click;
+
             txtURL.PreviewKeyDown += TxtURL_PreviewKeyDown;
+            txtURL.TextChanged += TxtURL_TextChanged;
 
             ImageList images = new ImageList();
             images.Images.Add(Properties.Resources.folder);
@@ -43,20 +45,16 @@ namespace DesktopBookmarks.View
             new ClientPresenter(this, new UIDialogService());
         }
 
+        private void TreeContextMenu_VisibleChanged(object sender, EventArgs e)
+        {
+            btnCtxtRemoveNode.Enabled = treeBookmarks.SelectedNode != null;
+        }
+        
         private void TxtURL_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if(e.KeyCode == Keys.Enter)
             {
                 txtLabel.Focus();
-            }
-        }
-
-        private void TreeBookmarks_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if(e.Button == MouseButtons.Right)
-            {
-                treeBookmarks.SelectedNode = e.Node;
-                treeContextMenu.Show(treeBookmarks.PointToScreen(e.Location));
             }
         }
         
@@ -85,20 +83,26 @@ namespace DesktopBookmarks.View
             AddBookmark();
         }
 
-        private void BtnAddFolder(object sender, EventArgs e)
+        private void AddFolder()
         {
             NewFolderDialog newFolderDialog = new NewFolderDialog();
+            TreeNode selectedNode = treeBookmarks.SelectedNode;
             newFolderDialog.ShowDialog();
 
             if (newFolderDialog.DialogResult != DialogResult.OK)
                 return;
 
-            TreeNode parentNode = treeBookmarks.SelectedNode;
+            TreeNode parentNode = selectedNode;
             string parentId = parentNode == null ? null : (string)parentNode.Tag;
 
             AddFolderEventArgs args = new AddFolderEventArgs(newFolderDialog.FolderName, parentId);
 
             AddNewFolder?.Invoke(this, args);
+        }
+
+        private void BtnAddFolder(object sender, EventArgs e)
+        {
+            AddFolder();
         }
 
         public void AddFolderTreeNode(Folder bookmark, string parentId)
@@ -117,6 +121,7 @@ namespace DesktopBookmarks.View
                 parentNode.Nodes.Add(node);
                 parentNode.Expand();
             }
+            treeBookmarks.SelectedNode = node;
         }
 
         private TreeNode FindFromAll(string id)
@@ -172,9 +177,12 @@ namespace DesktopBookmarks.View
         {
             var hit = treeBookmarks.HitTest(e.X, e.Y);
 
-            if (hit.Node == null)
+            treeBookmarks.SelectedNode = hit.Node;
+
+            if(e.Button == MouseButtons.Right)
             {
-                treeBookmarks.SelectedNode = null;
+                
+                treeContextMenu.Show(MousePosition);
             }
         }
 
@@ -201,6 +209,12 @@ namespace DesktopBookmarks.View
             if(e.Control && e.KeyCode == Keys.V)
             {
                 txtLabel.Focus();
+                string url = Clipboard.GetText();
+                if (UrlChecker.IsValidUrl(url))
+                {
+                    txtLabel.Text = new WebPageTitleScraper(url).PageTitle;
+                    txtLabel.Focus();
+                }
             }
         }
 
@@ -217,5 +231,14 @@ namespace DesktopBookmarks.View
             }
             treeBookmarks.Select();
         }
+
+        private void btnCtxAddBookmark_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnCtxAddFolder_Click(object sender, EventArgs e)
+        {
+            AddFolder();
+        }    
     }
 }

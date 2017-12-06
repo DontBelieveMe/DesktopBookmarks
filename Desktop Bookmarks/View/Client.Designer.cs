@@ -39,6 +39,9 @@
             this.btnRemove = new System.Windows.Forms.Button();
             this.treeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnCtxtRemoveNode = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCtxAddBookmark = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCtxAddFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.treeContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,6 +81,7 @@
             // 
             // treeBookmarks
             // 
+            this.treeBookmarks.CausesValidation = false;
             this.treeBookmarks.HideSelection = false;
             this.treeBookmarks.Location = new System.Drawing.Point(12, 90);
             this.treeBookmarks.Name = "treeBookmarks";
@@ -116,15 +120,39 @@
             // treeContextMenu
             // 
             this.treeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnCtxtRemoveNode});
+            this.btnCtxtRemoveNode,
+            this.addToolStripMenuItem});
             this.treeContextMenu.Name = "treeContextMenu";
-            this.treeContextMenu.Size = new System.Drawing.Size(153, 48);
+            this.treeContextMenu.Size = new System.Drawing.Size(118, 48);
             // 
             // btnCtxtRemoveNode
             // 
             this.btnCtxtRemoveNode.Name = "btnCtxtRemoveNode";
             this.btnCtxtRemoveNode.Size = new System.Drawing.Size(152, 22);
             this.btnCtxtRemoveNode.Text = "Remove";
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnCtxAddBookmark,
+            this.btnCtxAddFolder});
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToolStripMenuItem.Text = "Add";
+            // 
+            // btnCtxAddBookmark
+            // 
+            this.btnCtxAddBookmark.Name = "btnCtxAddBookmark";
+            this.btnCtxAddBookmark.Size = new System.Drawing.Size(152, 22);
+            this.btnCtxAddBookmark.Text = "Bookmark";
+            this.btnCtxAddBookmark.Click += new System.EventHandler(this.btnCtxAddBookmark_Click);
+            // 
+            // btnCtxAddFolder
+            // 
+            this.btnCtxAddFolder.Name = "btnCtxAddFolder";
+            this.btnCtxAddFolder.Size = new System.Drawing.Size(152, 22);
+            this.btnCtxAddFolder.Text = "Folder";
+            this.btnCtxAddFolder.Click += new System.EventHandler(this.btnCtxAddFolder_Click);
             // 
             // Client
             // 
@@ -162,6 +190,9 @@
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.ContextMenuStrip treeContextMenu;
         private System.Windows.Forms.ToolStripMenuItem btnCtxtRemoveNode;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnCtxAddBookmark;
+        private System.Windows.Forms.ToolStripMenuItem btnCtxAddFolder;
     }
 }
 

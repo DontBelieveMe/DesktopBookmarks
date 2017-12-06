@@ -8,3 +8,6 @@ I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\Desktop Bookmarks.exe
 I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\Desktop Bookmarks.pdb
 I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\DesktopBookmarks.View.Client.resources
 I:\Dev\Desktop Bookmarks\Desktop Bookmarks\obj\Debug\DesktopBookmarks.View.NewFolderDialog.resources
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\bin\Debug\HtmlAgilityPack.dll
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\bin\Debug\HtmlAgilityPack.pdb
+I:\Dev\Desktop Bookmarks\Desktop Bookmarks\bin\Debug\HtmlAgilityPack.xml
