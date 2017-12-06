@@ -39,43 +39,51 @@ namespace DesktopBookmarks.Classes
             }
         }
 
-        private void OpenWithEdge(string url)
+        private bool OpenWithEdge(string url)
         {
             try
             {
                 Process.Start("microsoft-edge:" + url);
-            } catch(Exception)
-            {
-                OpenWithDefault(url);
-            }
-        }
-
-        private void OpenWithChrome(string url)
-        {
-            try
-            {
-                Process.Start("chrome.exe", url);
-            } catch(Exception)
-            {
-                OpenWithDefault(url);
-            }
-        }
-        
-        private void OpenWithIE(string url)
-        {
-            try
-            {
-                Process.Start("\"C:\\Program Files\\Internet Explorer\\iexplore.exe\"", url);
+                return true;
             }
             catch (Exception)
             {
                 OpenWithDefault(url);
+                return false;
             }
         }
 
-        private void OpenWithDefault(string url)
+        private bool OpenWithChrome(string url)
         {
-            OpenWithIE(url);
+            try
+            {
+                Process.Start("chrome.exe", url);
+                return true;
+            }
+            catch (Exception)
+            {
+                OpenWithDefault(url);
+                return false;
+            }
+        }
+        
+        private bool OpenWithIE(string url)
+        {
+            try
+            {
+                Process.Start("\"C:\\Program Files\\Internet Explorer\\iexplore.exe\"", url);
+                return true;
+            }
+            catch (Exception)
+            {
+                OpenWithDefault(url);
+                return false;
+            }
+        }
+
+        private bool OpenWithDefault(string url)
+        {
+            return OpenWithIE(url);
         }
     } 
 }
