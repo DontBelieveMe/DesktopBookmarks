@@ -30,7 +30,7 @@ namespace DesktopBookmarks.Presenter
             IModelType typeToOpen = GetModelTypeById(e.IdToOpen);
             if (typeToOpen.GetType() != typeof(Bookmark)) return;
 
-            URLOpener opener = new URLOpener(Browser.Edge);
+            URLOpener opener = new URLOpener(Browser.Chrome);
             opener.Open(((Bookmark)typeToOpen).Url);
         }
 
