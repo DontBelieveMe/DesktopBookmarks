@@ -9,7 +9,7 @@ namespace DesktopBookmarks.Classes
 {
     public enum Browser
     {
-        Chrome, IE, Firefox
+        Chrome, IE, Firefox, Edge
     }
 
     public class URLOpener
@@ -31,9 +31,22 @@ namespace DesktopBookmarks.Classes
                 case Browser.IE:
                     OpenWithIE(url);
                     break;
-                default:
-                    OpenWithDefault(url);
+                case Browser.Edge:
+                    OpenWithEdge(url);
                     break;
+                default:
+                    throw new NotImplementedException("Cannot open in this browser yet as it has not been implemented yet");
+            }
+        }
+
+        private void OpenWithEdge(string url)
+        {
+            try
+            {
+                Process.Start("microsoft-edge:" + url);
+            } catch(Exception)
+            {
+                OpenWithDefault(url);
             }
         }
 
@@ -50,11 +63,9 @@ namespace DesktopBookmarks.Classes
         
         private void OpenWithIE(string url)
         {
-            throw new NotImplementedException();
-
             try
             {
-                Process.Start(@"c:\windows\servicepackfiles\i386\iexplore.exe", url);
+                Process.Start("\"C:\\Program Files\\Internet Explorer\\iexplore.exe\"", url);
             }
             catch (Exception)
             {
