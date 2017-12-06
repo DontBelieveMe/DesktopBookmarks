@@ -33,6 +33,7 @@ namespace DesktopBookmarks.View
             treeBookmarks.NodeMouseClick += TreeBookmarks_NodeMouseClick;
             btnCtxtRemoveNode.Click += BtnRemove_Click;
             txtURL.PreviewKeyDown += TxtURL_PreviewKeyDown;
+
             ImageList images = new ImageList();
             images.Images.Add(Properties.Resources.folder);
             images.Images.Add(Properties.Resources.internet);
@@ -79,7 +80,6 @@ namespace DesktopBookmarks.View
             AddNewBookmark?.Invoke(this, args);
         }
 
-        // Add a bookmark
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             AddBookmark();
@@ -198,7 +198,6 @@ namespace DesktopBookmarks.View
 
         private void txtURL_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            // Pasting!
             if(e.Control && e.KeyCode == Keys.V)
             {
                 txtLabel.Focus();
