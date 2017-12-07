@@ -44,6 +44,7 @@ namespace DesktopBookmarks.View
 
             treeBookmarks.ImageList = images;
 
+            treeBookmarks.PreviewKeyDown += TreeBookmarks_PreviewKeyDown;
             new ClientPresenter(this, new UIDialogService());
 
             txtSearchQuery.Text = SharedConstants.SearchText;
@@ -52,6 +53,14 @@ namespace DesktopBookmarks.View
             txtSearchQuery.TextChanged += TxtSearchQuery_TextChanged;
             txtSearchQuery.PreviewKeyDown += TxtSearchQuery_PreviewKeyDown;
             treeBookmarks.ShowNodeToolTips = true;
+        }
+
+        private void TreeBookmarks_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if(e.KeyCode == Keys.Delete)
+            {
+                RemoveCurrentNode();
+            }
         }
 
         private void TxtSearchQuery_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -112,7 +121,7 @@ namespace DesktopBookmarks.View
             }
         }
         
-        private void BtnRemove_Click(object sender, EventArgs e)
+        private void RemoveCurrentNode()
         {
             TreeNode selected = treeBookmarks.SelectedNode;
             string id;
@@ -120,6 +129,11 @@ namespace DesktopBookmarks.View
             else id = (string)selected.Tag;
 
             RemoveNode?.Invoke(this, new RemoveNodeEventArgs(id));
+        }
+
+        private void BtnRemove_Click(object sender, EventArgs e)
+        {
+            RemoveCurrentNode();
         }
 
         private void AddBookmark()
