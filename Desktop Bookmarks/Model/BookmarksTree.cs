@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace DesktopBookmarks.Model
 {
-    class BookmarksTree
+    class BookmarksTree : ICloneable
     {
         public List<IModelType> Bookmarks = new List<IModelType>();
 
@@ -101,6 +101,34 @@ namespace DesktopBookmarks.Model
         private bool IsFolder(IModelType type)
         {
             return type.GetType() == typeof(Folder);
+        }
+
+        public object Clone()
+        {
+            BookmarksTree newTree = new BookmarksTree();
+
+            foreach(IModelType node in Bookmarks)
+            {
+                newTree.Bookmarks.Add(CloneChildNode(node));
+            }
+
+            return newTree;
+        }
+
+        private IModelType CloneChildNode(IModelType node)
+        {
+            IModelType model = (IModelType) node.Clone();
+
+            if(model.GetType() == typeof(Folder))
+            {
+                foreach(IModelType child in ((Folder)node).Children)
+                {
+                    IModelType clonedChild = CloneChildNode(child);
+                    ((Folder)model).Children.Add(clonedChild);
+                }
+            }
+
+            return model;
         }
     }
 }

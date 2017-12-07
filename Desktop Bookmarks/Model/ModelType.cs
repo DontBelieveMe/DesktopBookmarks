@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DesktopBookmarks.Model
 {
-    public interface IModelType
+    public interface IModelType : ICloneable
     {
         string Label { get; set; }
         string Id { get; set; }

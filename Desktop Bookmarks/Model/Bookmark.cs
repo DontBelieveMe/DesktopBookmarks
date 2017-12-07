@@ -20,5 +20,11 @@ namespace DesktopBookmarks.Model
             this.Id = id;
             this.ParentId = parentId;
         }
+
+        public object Clone()
+        {
+            Bookmark bmk = new Bookmark(Url, Label, Id, ParentId);
+            return bmk;
+        }
     }
 }

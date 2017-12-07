@@ -20,5 +20,10 @@ namespace DesktopBookmarks.Model
             this.Id = id;
             this.ParentId = parentId;
         }
+
+        public object Clone()
+        {
+            return new Folder(Label, Id, ParentId);
+        }
     }
 }

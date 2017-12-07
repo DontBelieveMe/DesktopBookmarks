@@ -58,6 +58,7 @@
     <Compile Include="Presenter\ClientPresenter.cs" />
     <Compile Include="View\AddBookmarkEventArgs.cs" />
     <Compile Include="View\AddFolderEventArgs.cs" />
+    <Compile Include="View\FilterTreeEventArgs.cs" />
     <Compile Include="View\Client.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +77,7 @@
     </Compile>
     <Compile Include="View\OpenBookmarkEventArgs.cs" />
     <Compile Include="View\RemoveNodeEventArgs.cs" />
+    <Compile Include="View\SharedConstants.cs" />
     <Compile Include="View\UIDialogService.cs" />
     <EmbeddedResource Include="View\Client.resx">
       <DependentUpon>Client.cs</DependentUpon>

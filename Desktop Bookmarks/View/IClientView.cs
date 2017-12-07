@@ -13,7 +13,8 @@ namespace DesktopBookmarks.View
         event EventHandler<AddBookmarkEventArgs> AddNewBookmark;
         event EventHandler<OpenBookmarkEventArgs> OpenBookmark;
         event EventHandler<RemoveNodeEventArgs> RemoveNode;
-        event EventHandler Save;
+        event EventHandler<FilterTreeEventArgs> FilterTree;
+        event EventHandler SearchFocusLost;
 
         string LabelText { get; set; }
         string UrlText { get; set; }
@@ -21,5 +22,6 @@ namespace DesktopBookmarks.View
         void AddFolderTreeNode(Folder bookmark, string parentId);
         void AddBookmarkTreeNode(Bookmark bookmark, string parentId);
         void RemoveNodeFromTree(string id);
+        void ClearTree();
     }
 }

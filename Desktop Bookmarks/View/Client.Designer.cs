@@ -42,6 +42,7 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCtxAddBookmark = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCtxAddFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtSearchQuery = new System.Windows.Forms.TextBox();
             this.treeContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,9 +84,9 @@
             // 
             this.treeBookmarks.CausesValidation = false;
             this.treeBookmarks.HideSelection = false;
-            this.treeBookmarks.Location = new System.Drawing.Point(12, 88);
+            this.treeBookmarks.Location = new System.Drawing.Point(12, 114);
             this.treeBookmarks.Name = "treeBookmarks";
-            this.treeBookmarks.Size = new System.Drawing.Size(374, 343);
+            this.treeBookmarks.Size = new System.Drawing.Size(374, 317);
             this.treeBookmarks.TabIndex = 4;
             this.treeBookmarks.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeBookmarks_NodeMouseDoubleClick);
             this.treeBookmarks.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeBookmarks_MouseDown);
@@ -154,12 +155,21 @@
             this.btnCtxAddFolder.Text = "Folder";
             this.btnCtxAddFolder.Click += new System.EventHandler(this.btnCtxAddFolder_Click);
             // 
+            // txtSearchQuery
+            // 
+            this.txtSearchQuery.Location = new System.Drawing.Point(12, 88);
+            this.txtSearchQuery.Name = "txtSearchQuery";
+            this.txtSearchQuery.Size = new System.Drawing.Size(374, 20);
+            this.txtSearchQuery.TabIndex = 8;
+            this.txtSearchQuery.Text = "Search...";
+            // 
             // Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(398, 443);
+            this.Controls.Add(this.txtSearchQuery);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnNewFolder);
             this.Controls.Add(this.btnAdd);
@@ -194,6 +204,7 @@
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnCtxAddBookmark;
         private System.Windows.Forms.ToolStripMenuItem btnCtxAddFolder;
+        private System.Windows.Forms.TextBox txtSearchQuery;
     }
 }
 

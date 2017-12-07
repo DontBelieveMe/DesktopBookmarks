@@ -24,6 +24,8 @@ namespace DesktopBookmarks.View
         public event EventHandler<OpenBookmarkEventArgs> OpenBookmark;
         public event EventHandler<RemoveNodeEventArgs> RemoveNode;
         public event EventHandler Save;
+        public event EventHandler<FilterTreeEventArgs> FilterTree;
+        public event EventHandler SearchFocusLost;
 
         public Client()
         {
@@ -43,6 +45,40 @@ namespace DesktopBookmarks.View
             treeBookmarks.ImageList = images;
 
             new ClientPresenter(this, new UIDialogService());
+
+            txtSearchQuery.Text = SharedConstants.SearchText;
+            txtSearchQuery.Click += TxtSearchQuery_Click;
+            txtSearchQuery.LostFocus += TxtSearchQuery_LostFocus;
+            txtSearchQuery.TextChanged += TxtSearchQuery_TextChanged;
+        }
+
+        private void TxtSearchQuery_TextChanged(object sender, EventArgs e)
+        {
+            if (txtSearchQuery.Text == SharedConstants.SearchText)
+                return;
+            
+            FilterTree?.Invoke(this, new FilterTreeEventArgs(txtSearchQuery.Text));
+            treeBookmarks.Invalidate();
+        }
+
+        private void TxtSearchQuery_LostFocus(object sender, EventArgs e)
+        {
+            if(string.IsNullOrWhiteSpace(txtSearchQuery.Text))
+            {
+                txtSearchQuery.Text = SharedConstants.SearchText;
+                SearchFocusLost?.Invoke(this, new EventArgs());
+                treeBookmarks.Invalidate();
+            }
+        }
+
+        private void TxtSearchQuery_Click(object sender, EventArgs e)
+        {
+            if (txtSearchQuery.Text == SharedConstants.SearchText)
+            {
+                txtSearchQuery.TextChanged -= TxtSearchQuery_TextChanged;
+                txtSearchQuery.Text = "";
+                txtSearchQuery.TextChanged += TxtSearchQuery_TextChanged;
+            }
         }
 
         private void TreeContextMenu_VisibleChanged(object sender, EventArgs e)
@@ -244,6 +280,11 @@ namespace DesktopBookmarks.View
         private void btnSave_Click(object sender, EventArgs e)
         {
             Save?.Invoke(this, new EventArgs());
+        }
+
+        public void ClearTree()
+        {
+            treeBookmarks.Nodes.Clear();
         }
     }
 }

@@ -25,17 +25,71 @@ namespace DesktopBookmarks.Presenter
             _view.AddNewBookmark += AddNewBookmark;
             _view.OpenBookmark += _view_OpenBookmark;
             _view.RemoveNode += _view_RemoveNode;
-            _view.Save += _view_Save;
+            _view.FilterTree += _view_FilterTree;
+            _view.SearchFocusLost += _view_SearchFocusLost;
             _bookmarksTree = new BookmarksTree();
-            LoadFromFile();
-        }
-
-        private void LoadFromFile()
-        {
             string filename = "bookmarks.xml";
             _bookmarksTree.Read(filename);
+            LoadTreeIntoView(_bookmarksTree);
+        }
 
-            foreach (IModelType item in _bookmarksTree.Bookmarks)
+        private void _view_SearchFocusLost(object sender, EventArgs e)
+        {
+            _view.ClearTree();
+            LoadTreeIntoView(_bookmarksTree);
+        }
+
+        private void _view_FilterTree(object sender, FilterTreeEventArgs e)
+        {
+            if(string.IsNullOrWhiteSpace(e.SearchText))
+            {
+                _view.ClearTree();
+                LoadTreeIntoView(_bookmarksTree);
+                return;
+            }
+
+            BookmarksTree filterdTree = (BookmarksTree) _bookmarksTree.Clone();
+            foreach(IModelType node in filterdTree.Bookmarks.ToList())
+            {
+                FilterChildren(e.SearchText, node, ref filterdTree);
+            }
+            _view.ClearTree();
+            LoadTreeIntoView(filterdTree);
+        }
+
+        private void FilterChildren(string query, IModelType node, ref BookmarksTree tree)
+        {
+            bool isFolder = node.GetType() == typeof(Folder);
+            if(isFolder)
+            {
+                if (node.Label.Contains(query))
+                    return;
+
+                Folder folder = (Folder)node;
+                foreach(IModelType child in folder.Children.ToList())
+                {
+                    FilterChildren(query, child, ref tree);
+                }
+
+                if (folder.Children.Count != 0) return;
+            }
+
+            if(!node.Label.Contains(query))
+            {
+                if(string.IsNullOrEmpty(node.ParentId))
+                {
+                    tree.Bookmarks.Remove(node);
+                } else
+                {
+                    Folder parentFolder = (Folder)GetModelTypeById(node.ParentId, tree);
+                    parentFolder.Children.Remove(node);
+                }
+            }
+        }
+
+        private void LoadTreeIntoView(BookmarksTree tree)
+        {
+            foreach (IModelType item in tree.Bookmarks)
             {
                 LoadNode(item);
             }
@@ -55,19 +109,15 @@ namespace DesktopBookmarks.Presenter
                 _view.AddBookmarkTreeNode((Bookmark)type, type.ParentId);
             }
         }
-
-        private void _view_Save(object sender, EventArgs e)
-        {
-        }
-
+        
         private void _view_RemoveNode(object sender, RemoveNodeEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(e.IdToRemove))
                 return;
 
-            IModelType nodeToRemove = GetModelTypeById(e.IdToRemove);
+            IModelType nodeToRemove = GetModelTypeById(e.IdToRemove, _bookmarksTree);
             bool isNodeToRemoveAFolder = nodeToRemove.GetType() == typeof(Folder);
-            IModelType parentNode = GetModelTypeById(nodeToRemove.ParentId);
+            IModelType parentNode = GetModelTypeById(nodeToRemove.ParentId, _bookmarksTree);
             bool isParentAFolder = parentNode == null ? true : parentNode.GetType() == typeof(Folder);
             
             if (!isParentAFolder) return;
@@ -94,7 +144,7 @@ namespace DesktopBookmarks.Presenter
             }
             else
             {
-                Folder parentFolder = (Folder)GetModelTypeById(nodeToRemove.ParentId);
+                Folder parentFolder = (Folder)GetModelTypeById(nodeToRemove.ParentId, _bookmarksTree);
                 parentFolder.Children.Remove(nodeToRemove);
             }
 
@@ -104,7 +154,7 @@ namespace DesktopBookmarks.Presenter
 
         private void _view_OpenBookmark(object sender, OpenBookmarkEventArgs e)
         {
-            IModelType typeToOpen = GetModelTypeById(e.IdToOpen);
+            IModelType typeToOpen = GetModelTypeById(e.IdToOpen, _bookmarksTree);
             if (typeToOpen.GetType() != typeof(Bookmark)) return;
 
             URLOpener opener = new URLOpener(Browser.Chrome);
@@ -113,7 +163,7 @@ namespace DesktopBookmarks.Presenter
 
         private void AddNewBookmark(object sender, AddBookmarkEventArgs e)
         {
-            IModelType parentNode = GetModelTypeById(e.ParentID);
+            IModelType parentNode = GetModelTypeById(e.ParentID, _bookmarksTree);
             string parentId = parentNode == null ? null : parentNode.Id;
 
             string id = Guid.NewGuid().ToString();
@@ -144,7 +194,7 @@ namespace DesktopBookmarks.Presenter
 
         private void AddNewFolder(object sender, AddFolderEventArgs e)
         {
-            IModelType parentNode = GetModelTypeById(e.ParentId);
+            IModelType parentNode = GetModelTypeById(e.ParentId, _bookmarksTree);
             string parentId = parentNode == null ? null : parentNode.Id;
 
             string id = Guid.NewGuid().ToString();
@@ -168,12 +218,12 @@ namespace DesktopBookmarks.Presenter
             _bookmarksTree.WriteToFile("bookmarks.xml");
         }
         
-        private IModelType GetModelTypeById(string id)
+        private IModelType GetModelTypeById(string id, BookmarksTree tree)
         {
             if (id == null)
                 return null;
 
-            foreach(IModelType type in _bookmarksTree.Bookmarks)
+            foreach(IModelType type in tree.Bookmarks)
             {
                 IModelType t = GetModelTypeById(type, id);
                 if (t != null) return t;
