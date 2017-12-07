@@ -279,12 +279,6 @@ namespace DesktopBookmarks.View
             if(e.Control && e.KeyCode == Keys.V)
             {
                 txtLabel.Focus();
-                string url = Clipboard.GetText();
-                if (UrlChecker.IsValidUrl(url))
-                {
-                    txtLabel.Text = new WebPageTitleScraper(url).PageTitle;
-                    txtLabel.Focus();
-                }
             }
         }
 

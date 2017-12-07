@@ -48,9 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\UrlChecker.cs" />
     <Compile Include="Classes\URLOpener.cs" />
-    <Compile Include="Classes\WebPageTitleScraper.cs" />
     <Compile Include="Model\Bookmark.cs" />
     <Compile Include="Model\BookmarksTree.cs" />
     <Compile Include="Model\Folder.cs" />

@@ -130,12 +130,18 @@ namespace DesktopBookmarks.Presenter
                 {
 
                     var diagResult = _dialogService.ShowMessageBox(
-                        "Remove folder?", "Deleting this folder will delete all children.",
+                        "Remove folder?", "Deleting this folder will delete all children. Continue?",
                         System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Warning
                     );
 
                     if (diagResult != System.Windows.Forms.DialogResult.OK) return;
-                }
+                } 
+            } else
+            {
+                var diagResult = _dialogService.ShowMessageBox(
+                        "Delete node?", "There is no going back. Continue?",
+                        System.Windows.Forms.MessageBoxButtons.OKCancel, System.Windows.Forms.MessageBoxIcon.Warning);
+                if (diagResult != System.Windows.Forms.DialogResult.OK) return;
             }
 
             if (parentNode == null)
