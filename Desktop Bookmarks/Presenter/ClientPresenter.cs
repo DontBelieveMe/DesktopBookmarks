@@ -23,23 +23,25 @@ namespace DesktopBookmarks.Presenter
 
             _view.AddNewFolder += AddNewFolder;
             _view.AddNewBookmark += AddNewBookmark;
-            _view.OpenBookmark += _view_OpenBookmark;
-            _view.RemoveNode += _view_RemoveNode;
-            _view.FilterTree += _view_FilterTree;
-            _view.SearchFocusLost += _view_SearchFocusLost;
+            _view.OpenBookmark += OpenBookmarkInBrowser;
+            _view.RemoveNode += RemoveNode;
+            _view.FilterTree += FilterTree;
+            _view.SearchFocusLost += FocusTextBoxLost;
+
             _bookmarksTree = new BookmarksTree();
+
             string filename = "bookmarks.xml";
             _bookmarksTree.Read(filename);
             LoadTreeIntoView(_bookmarksTree);
         }
 
-        private void _view_SearchFocusLost(object sender, EventArgs e)
+        private void FocusTextBoxLost(object sender, EventArgs e)
         {
             _view.ClearTree();
             LoadTreeIntoView(_bookmarksTree);
         }
 
-        private void _view_FilterTree(object sender, FilterTreeEventArgs e)
+        private void FilterTree(object sender, FilterTreeEventArgs e)
         {
             if(string.IsNullOrWhiteSpace(e.SearchText))
             {
@@ -110,7 +112,7 @@ namespace DesktopBookmarks.Presenter
             }
         }
         
-        private void _view_RemoveNode(object sender, RemoveNodeEventArgs e)
+        private void RemoveNode(object sender, RemoveNodeEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(e.IdToRemove))
                 return;
@@ -158,7 +160,7 @@ namespace DesktopBookmarks.Presenter
             _bookmarksTree.WriteToFile("bookmarks.xml");
         }
 
-        private void _view_OpenBookmark(object sender, OpenBookmarkEventArgs e)
+        private void OpenBookmarkInBrowser(object sender, OpenBookmarkEventArgs e)
         {
             IModelType typeToOpen = GetModelTypeById(e.IdToOpen, _bookmarksTree);
             if (typeToOpen.GetType() != typeof(Bookmark)) return;
