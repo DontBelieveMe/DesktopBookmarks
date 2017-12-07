@@ -290,6 +290,7 @@ namespace DesktopBookmarks.View
 
         private void btnCtxAddBookmark_Click(object sender, EventArgs e)
         {
+            txtURL.Focus();
         }
 
         private void btnCtxAddFolder_Click(object sender, EventArgs e)
