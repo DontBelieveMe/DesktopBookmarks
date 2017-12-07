@@ -11,6 +11,52 @@ namespace DesktopBookmarks.Model
     {
         public List<IModelType> Bookmarks = new List<IModelType>();
 
+        public void Read(string filename)
+        {
+            XmlDocument document = new XmlDocument();
+            try
+            {
+                document.Load(filename);
+                
+            } catch(System.IO.IOException e)
+            {
+                return;
+            }
+            if (document.ChildNodes.Count == 0) return;
+            XmlNode rootNode = document.ChildNodes[1];
+            foreach(XmlNode child in rootNode.ChildNodes)
+            {
+               IModelType type = ReadNode(child, document);
+                Bookmarks.Add(type);
+            }
+        }
+
+        private IModelType ReadNode(XmlNode node, XmlDocument document)
+        {
+            if(node.Name == "Folder")
+            {
+                string label = node.Attributes[0].Value;
+                string id = node.Attributes[1].Value;
+                string parentId = node.Attributes[2].Value;
+                Folder folder = new Folder(label, id, parentId);
+                foreach(XmlNode child in node.ChildNodes)
+                {
+                    IModelType item = ReadNode(child, document);
+                    folder.Children.Add(item);
+                }
+                return folder;
+
+            } else if(node.Name == "Bookmark")
+            {
+                string url = node.Attributes[0].Value;
+                string label = node.Attributes[1].Value;
+                string id = node.Attributes[2].Value;
+                string parentId = node.Attributes[3].Value;
+                return new Bookmark(url, label, id, parentId);
+            }
+            throw new NotImplementedException();
+        }
+
         public void WriteToFile(string filename)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -33,6 +79,7 @@ namespace DesktopBookmarks.Model
             if(IsFolder(node))
             {
                 writer.WriteStartElement("Folder");
+                writer.WriteAttributeString("label", ((Folder)node).Label);
                 writer.WriteAttributeString("id", node.Id);
                 writer.WriteAttributeString("parentId", node.ParentId);
                 foreach (IModelType kids in ((Folder)node).Children)

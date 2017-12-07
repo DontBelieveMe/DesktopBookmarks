@@ -27,11 +27,37 @@ namespace DesktopBookmarks.Presenter
             _view.RemoveNode += _view_RemoveNode;
             _view.Save += _view_Save;
             _bookmarksTree = new BookmarksTree();
+            LoadFromFile();
+        }
+
+        private void LoadFromFile()
+        {
+            string filename = "bookmarks.xml";
+            _bookmarksTree.Read(filename);
+
+            foreach (IModelType item in _bookmarksTree.Bookmarks)
+            {
+                LoadNode(item);
+            }
+        }
+
+        private void LoadNode(IModelType type)
+        {
+            if(type.GetType() == typeof(Folder))
+            {
+                _view.AddFolderTreeNode((Folder)type, type.ParentId);
+                foreach(IModelType child in ((Folder)type).Children)
+                {
+                    LoadNode(child);
+                }
+            } else if(type.GetType() == typeof(Bookmark))
+            {
+                _view.AddBookmarkTreeNode((Bookmark)type, type.ParentId);
+            }
         }
 
         private void _view_Save(object sender, EventArgs e)
         {
-            _bookmarksTree.WriteToFile("Dave");
         }
 
         private void _view_RemoveNode(object sender, RemoveNodeEventArgs e)
@@ -73,6 +99,7 @@ namespace DesktopBookmarks.Presenter
             }
 
             _view.RemoveNodeFromTree(e.IdToRemove);
+            _bookmarksTree.WriteToFile("bookmarks.xml");
         }
 
         private void _view_OpenBookmark(object sender, OpenBookmarkEventArgs e)
@@ -111,6 +138,8 @@ namespace DesktopBookmarks.Presenter
 
             _view.LabelText = "";
             _view.UrlText = "";
+
+            _bookmarksTree.WriteToFile("bookmarks.xml");
         }
 
         private void AddNewFolder(object sender, AddFolderEventArgs e)
@@ -136,6 +165,7 @@ namespace DesktopBookmarks.Presenter
             }
 
             _view.AddFolderTreeNode(folder, e.ParentId);
+            _bookmarksTree.WriteToFile("bookmarks.xml");
         }
         
         private IModelType GetModelTypeById(string id)
