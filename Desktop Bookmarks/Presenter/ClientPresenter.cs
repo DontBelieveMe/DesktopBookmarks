@@ -62,7 +62,7 @@ namespace DesktopBookmarks.Presenter
             bool isFolder = node.GetType() == typeof(Folder);
             if(isFolder)
             {
-                if (node.Label.Contains(query))
+                if (node.Label.ToLower().Contains(query.ToLower()))
                     return;
 
                 Folder folder = (Folder)node;
@@ -74,7 +74,7 @@ namespace DesktopBookmarks.Presenter
                 if (folder.Children.Count != 0) return;
             }
 
-            if(!node.Label.Contains(query))
+            if(!node.Label.ToLower().Contains(query.ToLower()))
             {
                 if(string.IsNullOrEmpty(node.ParentId))
                 {
