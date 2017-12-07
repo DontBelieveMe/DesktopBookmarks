@@ -50,6 +50,19 @@ namespace DesktopBookmarks.View
             txtSearchQuery.Click += TxtSearchQuery_Click;
             txtSearchQuery.LostFocus += TxtSearchQuery_LostFocus;
             txtSearchQuery.TextChanged += TxtSearchQuery_TextChanged;
+            txtSearchQuery.PreviewKeyDown += TxtSearchQuery_PreviewKeyDown;
+            treeBookmarks.ShowNodeToolTips = true;
+        }
+
+        private void TxtSearchQuery_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if(e.KeyCode == Keys.Escape)
+            {
+                txtSearchQuery.Text = SharedConstants.SearchText;
+                SearchFocusLost?.Invoke(this, new EventArgs());
+                treeBookmarks.Invalidate();
+                treeBookmarks.Focus();
+            }
         }
 
         private void TxtSearchQuery_TextChanged(object sender, EventArgs e)
@@ -71,7 +84,7 @@ namespace DesktopBookmarks.View
             }
         }
 
-        private void TxtSearchQuery_Click(object sender, EventArgs e)
+        private void OnSearchClick()
         {
             if (txtSearchQuery.Text == SharedConstants.SearchText)
             {
@@ -79,6 +92,11 @@ namespace DesktopBookmarks.View
                 txtSearchQuery.Text = "";
                 txtSearchQuery.TextChanged += TxtSearchQuery_TextChanged;
             }
+        }
+
+        private void TxtSearchQuery_Click(object sender, EventArgs e)
+        {
+            OnSearchClick();
         }
 
         private void TreeContextMenu_VisibleChanged(object sender, EventArgs e)
@@ -147,6 +165,7 @@ namespace DesktopBookmarks.View
             node.Text = bookmark.Label;
             node.Tag = bookmark.Id;
             node.ImageIndex = 0;
+
             node.SelectedImageIndex = 0;
             if(string.IsNullOrEmpty(parentId))
             {
@@ -196,6 +215,7 @@ namespace DesktopBookmarks.View
             node.Text = bookmark.Label;
             node.Tag = bookmark.Id;
             node.ImageIndex = 1;
+            node.ToolTipText = bookmark.Url;
             node.SelectedImageIndex = 1;
             if (string.IsNullOrEmpty(parentId))
             {
@@ -285,6 +305,18 @@ namespace DesktopBookmarks.View
         public void ClearTree()
         {
             treeBookmarks.Nodes.Clear();
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.F))
+            {
+                txtSearchQuery.Select();
+                OnSearchClick();
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }
