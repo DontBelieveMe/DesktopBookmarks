@@ -43,6 +43,7 @@
             this.btnCtxAddBookmark = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCtxAddFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.txtSearchQuery = new System.Windows.Forms.TextBox();
+            this.btnOpenLink = new System.Windows.Forms.Button();
             this.treeContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -163,12 +164,23 @@
             this.txtSearchQuery.TabIndex = 8;
             this.txtSearchQuery.Text = "Search...";
             // 
+            // btnOpenLink
+            // 
+            this.btnOpenLink.Location = new System.Drawing.Point(149, 59);
+            this.btnOpenLink.Name = "btnOpenLink";
+            this.btnOpenLink.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenLink.TabIndex = 9;
+            this.btnOpenLink.Text = "Open Link";
+            this.btnOpenLink.UseVisualStyleBackColor = true;
+            this.btnOpenLink.Click += new System.EventHandler(this.btnOpenLink_Click);
+            // 
             // Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(398, 443);
+            this.Controls.Add(this.btnOpenLink);
             this.Controls.Add(this.txtSearchQuery);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnNewFolder);
@@ -205,6 +217,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnCtxAddBookmark;
         private System.Windows.Forms.ToolStripMenuItem btnCtxAddFolder;
         private System.Windows.Forms.TextBox txtSearchQuery;
+        private System.Windows.Forms.Button btnOpenLink;
     }
 }
 

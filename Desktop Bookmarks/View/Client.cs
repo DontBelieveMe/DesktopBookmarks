@@ -256,13 +256,18 @@ namespace DesktopBookmarks.View
             }
         }
 
-        private void treeBookmarks_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void FollowLink()
         {
             TreeNode selected = treeBookmarks.SelectedNode;
             if (selected == null) return;
             string id = (string)selected.Tag;
 
             OpenBookmark?.Invoke(this, new OpenBookmarkEventArgs(id));
+        }
+
+        private void treeBookmarks_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            FollowLink();
         }
 
         private void txtLabel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -326,6 +331,11 @@ namespace DesktopBookmarks.View
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void btnOpenLink_Click(object sender, EventArgs e)
+        {
+            FollowLink();
         }
     }
 }
